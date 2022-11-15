@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 // padding: const EdgeInsets.all(9),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 1 / 1.2,
+                  childAspectRatio: 1 / 1.1,
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   return FoodItemWidget(
@@ -192,36 +192,203 @@ class FoodItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(20)),
-        child: Column(
-          children: [
-            addVerticalSpace(10),
-            SizedBox(height: 130, width: 130, child: Image.asset(imagePath)),
-            addVerticalSpace(10),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 100,
-                    child: Text(
-                      name,
-                      maxLines: 2,
+      child: InkWell(
+        onTap: () {
+          // open bottom sheet
+          buildFoodItemDetailBottomSheet(context);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(20)),
+          child: Column(
+            children: [
+              addVerticalSpace(10),
+              SizedBox(height: 130, width: 130, child: Image.asset(imagePath)),
+              addVerticalSpace(10),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 100,
+                      child: Text(
+                        name,
+                        maxLines: 2,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      price,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    price,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            )
-          ],
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
+      ),
+    );
+  }
+
+  Future<dynamic> buildFoodItemDetailBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        builder: (context) {
+          return Container(
+            height: MediaQuery.of(context).size.height * 0.75,
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15.0),
+                    topRight: Radius.circular(15.0))),
+            child: ListView(
+              children: [
+                addVerticalSpace(30),
+                Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                    child: Container(
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20))),
+                        height: 200,
+                        width: double.infinity,
+                        child: Image.asset(imagePath)),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Container(
+                    color: Colors.white,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Divider(),
+                        Text(
+                          'The Kitchen~ $name',
+                          maxLines: 2,
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
+                        const Text(
+                          '~240g',
+                          maxLines: 2,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              color: Colors.grey),
+                        ),
+                        addVerticalSpace(8),
+                        const Divider(),
+                        Row(
+                          children: [
+                            CategoryItem(
+                              categoryName: 'Vegan',
+                              icon: Icons.energy_savings_leaf,
+                              color: Colors.green,
+                              backgroundColor: Colors.grey[100],
+                            ),
+                            CategoryItem(
+                              categoryName: 'Calories',
+                              icon: Icons.local_fire_department,
+                              color: Colors.deepOrange,
+                              backgroundColor: Constants.grey100,
+                            ),
+                          ],
+                        ),
+                        const Divider(),
+                        const Text(
+                          'Nutritional value per 100 gm',
+                          maxLines: 2,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              color: Colors.grey),
+                        ),
+                        addVerticalSpace(2),
+                        Row(
+                          children: [
+                            buildNutritionalValues('198', 'kcal'),
+                            buildNutritionalValues('12', 'proteins'),
+                            buildNutritionalValues('18', 'fats'),
+                            buildNutritionalValues('5.6', 'carbs'),
+                          ],
+                        ),
+                        const Divider(),
+                        buildLabelAndDetail('Ingredients',
+                            'There are some toppings that should be cooked first before topping a pizza because they won’t cook fully before the pizza is done cooking. Raw meat should be fully cooked before adding it as a topping. Any vegetables that you don’t want to be raw on the cooked pizza such as onions, peppers, broccoli, or mushrooms should be sautéed first.'),
+                        const Divider(),
+                        addVerticalSpace(5),
+                        buildLabelAndDetail('Terms and Conditions',
+                            'There are some toppings that should be cooked first before topping a pizza because they won’t cook fully before the pizza is done cooking. Raw meat should be fully cooked before adding it as a topping. Any vegetables that you don’t want to be raw on the cooked pizza such as onions, peppers, broccoli, or mushrooms should be sautéed first.'),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
+  Column buildLabelAndDetail(String label, String details) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          maxLines: 2,
+          textAlign: TextAlign.left,
+          style: const TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 15, color: Colors.black),
+        ),
+        addVerticalSpace(5),
+        Text(
+          details,
+          // maxLines: 2,
+          textAlign: TextAlign.left,
+
+          style: const TextStyle(
+              letterSpacing: 0.5,
+              fontWeight: FontWeight.normal,
+              fontSize: 15,
+              color: Colors.grey),
+        ),
+      ],
+    );
+  }
+
+  Widget buildNutritionalValues(String value, String key) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        children: [
+          Text(
+            value,
+            maxLines: 2,
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 15, color: Colors.black),
+          ),
+          Text(
+            key,
+            maxLines: 2,
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 15, color: Colors.grey),
+          ),
+        ],
       ),
     );
   }
@@ -242,26 +409,23 @@ class Categories extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            children: [
-              const CategoryItem(
+            children: const [
+              CategoryItem(
                 categoryName: 'Vegan',
                 icon: Icons.energy_savings_leaf,
                 color: Colors.green,
               ),
-              addHorizontalSpace(7),
-              const CategoryItem(
+              CategoryItem(
                 categoryName: 'Coffee',
                 icon: Icons.coffee,
                 color: Colors.brown,
               ),
-              addHorizontalSpace(7),
-              const CategoryItem(
+              CategoryItem(
                 categoryName: 'Drinks',
                 icon: Icons.emoji_food_beverage_rounded,
                 color: Colors.red,
               ),
-              addHorizontalSpace(7),
-              const CategoryItem(
+              CategoryItem(
                 categoryName: 'Ice Creams',
                 icon: Icons.icecream_rounded,
                 color: Colors.pink,
@@ -276,33 +440,39 @@ class CategoryItem extends StatelessWidget {
   final String categoryName;
   final IconData icon;
   final Color color;
+  final Color? backgroundColor;
   const CategoryItem({
     Key? key,
     required this.categoryName,
     required this.icon,
     required this.color,
+    this.backgroundColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10))),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              color: color,
-            ),
-            addHorizontalSpace(4),
-            Text(
-              categoryName,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            )
-          ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 3.5),
+      child: Container(
+        decoration: BoxDecoration(
+            color: backgroundColor ?? Colors.white,
+            borderRadius: const BorderRadius.all(Radius.circular(10))),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            children: [
+              Icon(
+                icon,
+                color: color,
+              ),
+              addHorizontalSpace(4),
+              Text(
+                categoryName,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              )
+            ],
+          ),
         ),
       ),
     );
