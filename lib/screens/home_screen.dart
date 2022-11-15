@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_order_ui/models/food_item.dart';
+import 'package:food_order_ui/utils/constants.dart';
 
 import '../utils/widgetFunctions.dart';
 
@@ -12,8 +14,33 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    List<FoodItem> foodItems = [];
+    foodItems.add(const FoodItem(
+        imagePath: Constants.pasta, name: 'Pasta', price: '\$24'));
+    foodItems.add(const FoodItem(
+        imagePath: Constants.pizza, name: 'Pizza', price: '\$21'));
+    foodItems.add(const FoodItem(
+        imagePath: Constants.quinoa, name: 'Quinoa', price: '\$34'));
+    foodItems.add(const FoodItem(
+        imagePath: Constants.burger, name: 'Burger', price: '\$14'));
+    foodItems.add(const FoodItem(
+        imagePath: Constants.pizza, name: 'Pizza', price: '\$41'));
     return SafeArea(
         child: Scaffold(
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 40),
+          child: Text(
+            'Check out 2 products',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text('The Kitchen'),
@@ -96,21 +123,23 @@ class _HomeScreenState extends State<HomeScreen> {
               buildLabelAndViewAll('Recommended for you'),
               addVerticalSpace(10),
               GridView.builder(
+                physics: const ScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: 4,
+                itemCount: foodItems.length,
                 // padding: const EdgeInsets.all(9),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 1 / 1.2,
                 ),
                 itemBuilder: (BuildContext context, int index) {
-                  return const FoodItem(
-                    name: 'Pizza',
-                    price: '\$20',
-                    imagePath: 'lib/images/pizza.png',
+                  return FoodItemWidget(
+                    name: foodItems[index].name,
+                    price: foodItems[index].price,
+                    imagePath: foodItems[index].imagePath,
                   );
                 },
-              )
+              ),
+              addVerticalSpace(40)
             ],
           ),
         ),
@@ -147,12 +176,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class FoodItem extends StatelessWidget {
+class FoodItemWidget extends StatelessWidget {
   final String imagePath;
   final String name;
   final String price;
 
-  const FoodItem({
+  const FoodItemWidget({
     Key? key,
     required this.imagePath,
     required this.name,
