@@ -239,108 +239,190 @@ class FoodItemWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(30.0),
         ),
         builder: (context) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.75,
-              decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15.0),
-                      topRight: Radius.circular(15.0))),
-              child: ListView(
-                children: [
-                  addVerticalSpace(30),
-                  Container(
-                    color: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                      child: Container(
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20))),
-                          height: 200,
-                          width: double.infinity,
-                          child: Image.asset(imagePath)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Container(
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.75,
+                  decoration: const BoxDecoration(
                       color: Colors.white,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Divider(),
-                          Text(
-                            'The Kitchen~ $name',
-                            maxLines: 2,
-                            textAlign: TextAlign.left,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
-                          ),
-                          const Text(
-                            '~240g',
-                            maxLines: 2,
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                                color: Colors.grey),
-                          ),
-                          addVerticalSpace(8),
-                          const Divider(),
-                          Row(
-                            children: [
-                              CategoryItem(
-                                categoryName: 'Vegan',
-                                icon: Icons.energy_savings_leaf,
-                                color: Colors.green,
-                                backgroundColor: Colors.grey[100],
-                              ),
-                              CategoryItem(
-                                categoryName: 'Calories',
-                                icon: Icons.local_fire_department,
-                                color: Colors.deepOrange,
-                                backgroundColor: Constants.grey100,
-                              ),
-                            ],
-                          ),
-                          const Divider(),
-                          const Text(
-                            'Nutritional value per 100 gm',
-                            maxLines: 2,
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                                color: Colors.grey),
-                          ),
-                          addVerticalSpace(2),
-                          Row(
-                            children: [
-                              buildNutritionalValues('198', 'kcal'),
-                              buildNutritionalValues('12', 'proteins'),
-                              buildNutritionalValues('18', 'fats'),
-                              buildNutritionalValues('5.6', 'carbs'),
-                            ],
-                          ),
-                          const Divider(),
-                          buildLabelAndDetail('Ingredients',
-                              'There are some toppings that should be cooked first before topping a pizza because they won’t cook fully before the pizza is done cooking. Raw meat should be fully cooked before adding it as a topping. Any vegetables that you don’t want to be raw on the cooked pizza such as onions, peppers, broccoli, or mushrooms should be sautéed first.'),
-                          const Divider(),
-                          addVerticalSpace(5),
-                          buildLabelAndDetail('Terms and Conditions',
-                              'There are some toppings that should be cooked first before topping a pizza because they won’t cook fully before the pizza is done cooking. Raw meat should be fully cooked before adding it as a topping. Any vegetables that you don’t want to be raw on the cooked pizza such as onions, peppers, broccoli, or mushrooms should be sautéed first.'),
-                        ],
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15.0),
+                          topRight: Radius.circular(15.0))),
+                  child: ListView(
+                    children: [
+                      addVerticalSpace(10),
+                      Container(
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                          child: Container(
+                              decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20))),
+                              height: 200,
+                              width: double.infinity,
+                              child: Image.asset(imagePath)),
+                        ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Container(
+                          color: Colors.white,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Divider(),
+                              Text(
+                                'The Kitchen~ $name',
+                                maxLines: 2,
+                                textAlign: TextAlign.left,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20),
+                              ),
+                              const Text(
+                                '~240g',
+                                maxLines: 2,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: Colors.grey),
+                              ),
+                              addVerticalSpace(8),
+                              const Divider(),
+                              Row(
+                                children: [
+                                  CategoryItem(
+                                    categoryName: 'Vegan',
+                                    icon: Icons.energy_savings_leaf,
+                                    color: Colors.green,
+                                    backgroundColor: Colors.grey[100],
+                                  ),
+                                  CategoryItem(
+                                    categoryName: 'Calories',
+                                    icon: Icons.local_fire_department,
+                                    color: Colors.deepOrange,
+                                    backgroundColor: Constants.grey100,
+                                  ),
+                                ],
+                              ),
+                              const Divider(),
+                              const Text(
+                                'Nutritional value per 100 gm',
+                                maxLines: 2,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: Colors.grey),
+                              ),
+                              addVerticalSpace(2),
+                              Row(
+                                children: [
+                                  buildNutritionalValues('198', 'kcal'),
+                                  buildNutritionalValues('12', 'proteins'),
+                                  buildNutritionalValues('18', 'fats'),
+                                  buildNutritionalValues('5.6', 'carbs'),
+                                ],
+                              ),
+                              const Divider(),
+                              buildLabelAndDetail('Ingredients',
+                                  'There are some toppings that should be cooked first before topping a pizza because they won’t cook fully before the pizza is done cooking. Raw meat should be fully cooked before adding it as a topping. Any vegetables that you don’t want to be raw on the cooked pizza such as onions, peppers, broccoli, or mushrooms should be sautéed first.'),
+                              const Divider(),
+                              addVerticalSpace(5),
+                              buildLabelAndDetail('Terms and Conditions',
+                                  'There are some toppings that should be cooked first before topping a pizza because they won’t cook fully before the pizza is done cooking. Raw meat should be fully cooked before adding it as a topping. Any vegetables that you don’t want to be raw on the cooked pizza such as onions, peppers, broccoli, or mushrooms should be sautéed first.'),
+                            ],
+                          ),
+                        ),
+                      ),
+                      addVerticalSpace(60),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30),
+                  child: Container(
+                    color: Colors.white,
+                    child: Row(
+                      children: [
+                        Container(
+                            decoration: BoxDecoration(
+                                color: Constants.grey100,
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: const [
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Icon(
+                                      Icons.remove,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                      '1',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Icon(
+                                      Icons.add,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )),
+                        addHorizontalSpace(10),
+                        Container(
+                            decoration: const BoxDecoration(
+                                color: Colors.black,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Row(
+                                  children: [
+                                    const Text(
+                                      'Add To Cart     ',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    // const Spacer(),
+                                    Text(
+                                      '\$ $price',
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
+                ),
+              )
+            ],
           );
         });
   }

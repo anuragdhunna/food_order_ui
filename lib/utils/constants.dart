@@ -10,5 +10,5 @@ class Constants {
   static const String burger = 'lib/images/burger.png';
 
   // Color
-  static Color? grey100 = Colors.grey[100];
+  static Color? grey100 = Colors.grey[300];
 }
