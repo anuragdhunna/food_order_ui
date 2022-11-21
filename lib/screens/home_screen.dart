@@ -345,42 +345,43 @@ class FoodItemWidget extends StatelessWidget {
                       children: [
                         const AddRemoveButton(),
                         addHorizontalSpace(10),
-                        Container(
-                            decoration: const BoxDecoration(
-                                color: Colors.black,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CartScreen(
+                                        foodItem: foodItem,
+                                      )),
+                            );
+                          },
+                          child: Container(
+                              decoration: const BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
                               child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Row(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => CartScreen(
-                                                    foodItem: foodItem,
-                                                  )),
-                                        );
-                                      },
-                                      child: const Text(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Row(
+                                    children: [
+                                      const Text(
                                         'Add To Cart     ',
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                    ),
-                                    // const Spacer(),
-                                    Text(
-                                      '\$ ${foodItem.price}',
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                    ),
-                                  ],
+                                      // const Spacer(),
+                                      Text(
+                                        '\$ ${foodItem.price}',
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            )),
+                              )),
+                        ),
                       ],
                     ),
                   ),
