@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_order_ui/models/food_item.dart';
 import 'package:food_order_ui/utils/constants.dart';
+import 'package:food_order_ui/utils/widgets/add_remove_button.dart';
 
 import '../utils/widgetFunctions.dart';
+import 'cart_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,16 +17,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     List<FoodItem> foodItems = [];
+    foodItems.add(
+        const FoodItem(imagePath: Constants.pasta, name: 'Pasta', price: '24'));
+    foodItems.add(
+        const FoodItem(imagePath: Constants.pizza, name: 'Pizza', price: '21'));
     foodItems.add(const FoodItem(
-        imagePath: Constants.pasta, name: 'Pasta', price: '\$24'));
+        imagePath: Constants.quinoa, name: 'Quinoa', price: '34'));
     foodItems.add(const FoodItem(
-        imagePath: Constants.pizza, name: 'Pizza', price: '\$21'));
-    foodItems.add(const FoodItem(
-        imagePath: Constants.quinoa, name: 'Quinoa', price: '\$34'));
-    foodItems.add(const FoodItem(
-        imagePath: Constants.burger, name: 'Burger', price: '\$14'));
-    foodItems.add(const FoodItem(
-        imagePath: Constants.pizza, name: 'Pizza', price: '\$41'));
+        imagePath: Constants.burger, name: 'Burger', price: '14'));
+    foodItems.add(
+        const FoodItem(imagePath: Constants.pizza, name: 'Pizza', price: '41'));
     return SafeArea(
         child: Scaffold(
       floatingActionButton: Container(
@@ -133,9 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   return FoodItemWidget(
-                    name: foodItems[index].name,
-                    price: foodItems[index].price,
-                    imagePath: foodItems[index].imagePath,
+                    foodItem: foodItems[index],
                   );
                 },
               ),
@@ -177,15 +177,11 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class FoodItemWidget extends StatelessWidget {
-  final String imagePath;
-  final String name;
-  final String price;
+  final FoodItem foodItem;
 
   const FoodItemWidget({
     Key? key,
-    required this.imagePath,
-    required this.name,
-    required this.price,
+    required this.foodItem,
   }) : super(key: key);
 
   @override
@@ -203,7 +199,10 @@ class FoodItemWidget extends StatelessWidget {
           child: Column(
             children: [
               addVerticalSpace(10),
-              SizedBox(height: 130, width: 130, child: Image.asset(imagePath)),
+              SizedBox(
+                  height: 130,
+                  width: 130,
+                  child: Image.asset(foodItem.imagePath)),
               addVerticalSpace(10),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -212,14 +211,14 @@ class FoodItemWidget extends StatelessWidget {
                     SizedBox(
                       width: 100,
                       child: Text(
-                        name,
+                        foodItem.name,
                         maxLines: 2,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
                     const Spacer(),
                     Text(
-                      price,
+                      foodItem.price,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -265,7 +264,7 @@ class FoodItemWidget extends StatelessWidget {
                                       topLeft: Radius.circular(20))),
                               height: 200,
                               width: double.infinity,
-                              child: Image.asset(imagePath)),
+                              child: Image.asset(foodItem.imagePath)),
                         ),
                       ),
                       Padding(
@@ -278,7 +277,7 @@ class FoodItemWidget extends StatelessWidget {
                             children: [
                               const Divider(),
                               Text(
-                                'The Kitchen~ $name',
+                                'The Kitchen~ ${foodItem.name}',
                                 maxLines: 2,
                                 textAlign: TextAlign.left,
                                 style: const TextStyle(
@@ -355,42 +354,7 @@ class FoodItemWidget extends StatelessWidget {
                     color: Colors.white,
                     child: Row(
                       children: [
-                        Container(
-                            decoration: BoxDecoration(
-                                color: Constants.grey100,
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(10))),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: const [
-                                  Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Icon(
-                                      Icons.remove,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      '1',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Icon(
-                                      Icons.add,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )),
+                        const AddRemoveButton(),
                         addHorizontalSpace(10),
                         Container(
                             decoration: const BoxDecoration(
@@ -403,13 +367,24 @@ class FoodItemWidget extends StatelessWidget {
                                 padding: const EdgeInsets.all(10.0),
                                 child: Row(
                                   children: [
-                                    const Text(
-                                      'Add To Cart     ',
-                                      style: TextStyle(color: Colors.white),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => CartScreen(
+                                                    foodItem: foodItem,
+                                                  )),
+                                        );
+                                      },
+                                      child: const Text(
+                                        'Add To Cart     ',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                                     ),
                                     // const Spacer(),
                                     Text(
-                                      '\$ $price',
+                                      '\$ ${foodItem.price}',
                                       style:
                                           const TextStyle(color: Colors.white),
                                     ),
