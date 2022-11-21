@@ -4,6 +4,7 @@ import 'package:food_order_ui/utils/constants.dart';
 import 'package:food_order_ui/utils/widgets/add_remove_button.dart';
 
 import '../utils/widgetFunctions.dart';
+import '../utils/widgets/submit_button.dart';
 import 'cart_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,19 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
         const FoodItem(imagePath: Constants.pizza, name: 'Pizza', price: '41'));
     return SafeArea(
         child: Scaffold(
-      floatingActionButton: Container(
-        decoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 40),
-          child: Text(
-            'Check out 2 products',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      ),
+      floatingActionButton: const SubmitButton(text: 'Check out 2 products'),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: AppBar(
         backgroundColor: Colors.black,
