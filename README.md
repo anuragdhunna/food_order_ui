@@ -1,16 +1,12 @@
 # food_order_ui
 
-A new Flutter project.
+Food Order UI
 
-## Getting Started
+## Screenshots
 
-This project is a starting point for a Flutter application.
+![](Screencast-from-09-03-23-030907.gif)
 
-A few resources to get you started if this is your first Flutter project:
+![](catalog.png)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![](cart-page.png)
